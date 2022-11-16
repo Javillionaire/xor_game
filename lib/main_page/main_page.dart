@@ -1,14 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:iks_zero_game/widgets/score_player.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+  const MainPage({
+    super.key,
+  });
 
   @override
   State<MainPage> createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
+  bool? isTheme = true;
   List<int> listBox = [0, 0, 0, 0, 0, 0, 0, 0, 0];
   bool? turnOf = true;
   int? scoreX = 0;
@@ -28,131 +32,169 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: isTheme! ? Colors.black : Colors.white,
       appBar: AppBar(
-        leading: IconButton(
-            onPressed: () {
-              showCupertinoDialog(
-                  context: context,
-                  builder: (context) {
-                    return CupertinoAlertDialog(
-                      title: const Text(
-                        "Choose your destiny",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 20,
-                            color: Colors.black),
-                      ),
-                      content: Container(
-                        alignment: Alignment.center,
-                        child: RichText(
-                            text: const TextSpan(
-                                text: 'X',
+          leading: IconButton(
+              color: isTheme! ? Colors.white : Colors.black,
+              onPressed: () {
+                showCupertinoDialog(
+                    context: context,
+                    builder: (context) {
+                      return CupertinoAlertDialog(
+                        title: const Text(
+                          "Choose your destiny",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 20,
+                              color: Colors.black,
+                              fontFamily: 'SFPro'),
+                        ),
+                        content: Container(
+                          alignment: Alignment.center,
+                          child: RichText(
+                              text: const TextSpan(
+                                  text: 'X',
+                                  style: TextStyle(
+                                      color: Colors.red,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: 'SFPro'),
+                                  children: [
+                                TextSpan(
+                                  text: ' or ',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: 'SFPro'),
+                                ),
+                                TextSpan(
+                                  text: 'O',
+                                  style: TextStyle(
+                                      color: Colors.green,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: 'SFPro'),
+                                )
+                              ])),
+                        ),
+                        actions: [
+                          CupertinoDialogAction(
+                              child: const Text(
+                                'X',
                                 style: TextStyle(
                                     color: Colors.red,
                                     fontSize: 20,
                                     fontWeight: FontWeight.w500,
-                                    fontFamily: 'Quick'),
-                                children: [
-                              TextSpan(
-                                text: ' or ',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500,
-                                    fontFamily: 'Quick'),
+                                    fontFamily: 'SFPro'),
                               ),
-                              TextSpan(
-                                text: 'O',
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                setState(() {
+                                  turnOf = true;
+                                });
+                              }),
+                          CupertinoDialogAction(
+                              child: const Text(
+                                'O',
                                 style: TextStyle(
                                     color: Colors.green,
                                     fontSize: 20,
                                     fontWeight: FontWeight.w500,
-                                    fontFamily: 'Quick'),
-                              )
-                            ])),
-                      ),
-                      actions: [
-                        CupertinoDialogAction(
-                            child: const Text(
-                              'X',
-                              style: TextStyle(
-                                  color: Colors.red,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: 'Quick'),
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                              setState(() {
-                                turnOf = true;
-                              });
-                            }),
-                        CupertinoDialogAction(
-                            child: const Text(
-                              'O',
-                              style: TextStyle(
-                                  color: Colors.green,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: 'Quick'),
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                              setState(() {
-                                turnOf = false;
-                              });
-                            })
-                      ],
-                    );
+                                    fontFamily: 'SFPro'),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                setState(() {
+                                  turnOf = false;
+                                });
+                              })
+                        ],
+                      );
+                    });
+              },
+              icon: const Icon(Icons.select_all_outlined)),
+          centerTitle: true,
+          backgroundColor: Colors.transparent,
+          elevation: .0,
+          title: RichText(
+              text: TextSpan(
+                  text: 'X',
+                  style: const TextStyle(
+                      color: Colors.red,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'SFPro'),
+                  children: [
+                TextSpan(
+                  text: ' or ',
+                  style: TextStyle(
+                      color: isTheme! ? Colors.white : Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'SFPro'),
+                ),
+                const TextSpan(
+                  text: 'O',
+                  style: TextStyle(
+                      color: Colors.green,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'SFPro'),
+                )
+              ])),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  setState(() {
+                    isTheme = !isTheme!;
                   });
-            },
-            icon: const Icon(Icons.select_all_outlined)),
-        centerTitle: true,
-        backgroundColor: Colors.transparent,
-        elevation: .0,
-        title: RichText(
-            text: const TextSpan(
-                text: 'X',
-                style: TextStyle(
-                    color: Colors.red,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: 'Quick'),
-                children: [
-              TextSpan(
-                text: ' or ',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: 'Quick'),
-              ),
-              TextSpan(
-                text: 'O',
-                style: TextStyle(
-                    color: Colors.green,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: 'Quick'),
-              )
-            ])),
-        actions: [
-          IconButton(
-              onPressed: () {
-                _clearBoard();
-              },
-              icon: const Icon(Icons.restart_alt)),
-          IconButton(
-              onPressed: () {
-                setState(() {
-                  scoreO = 0;
-                  scoreX = 0;
-                });
-              },
-              icon: const Icon(Icons.refresh))
-        ],
-      ),
+                },
+                icon: isTheme == false
+                    ? const Icon(
+                        Icons.wb_sunny,
+                        color: Colors.yellow,
+                      )
+                    : const Icon(
+                        Icons.nights_stay,
+                        color: Colors.grey,
+                      )),
+            PopupMenuButton(
+                icon: Icon(
+                  Icons.more_vert,
+                  color: isTheme! ? Colors.white : Colors.black,
+                ),
+                color: isTheme! ? Colors.black : Colors.white,
+                itemBuilder: (BuildContext context) => [
+                      PopupMenuItem(
+                        child: Text(
+                          'Clear board',
+                          style: TextStyle(
+                              color: isTheme! ? Colors.white : Colors.black,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16),
+                        ),
+                        onTap: () {
+                          _clearBoard();
+                        },
+                      ),
+                      PopupMenuItem(
+                        child: Text(
+                          'Clear score',
+                          style: TextStyle(
+                              color: isTheme! ? Colors.white : Colors.black,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            scoreO = 0;
+                            scoreX = 0;
+                          });
+                        },
+                      )
+                    ])
+          ]),
       body: Column(
         children: [
           playerScore(),
@@ -181,35 +223,22 @@ class _MainPageState extends State<MainPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              RichText(
-                  text: const TextSpan(
-                      text: 'Player',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Quick'),
-                      children: [
-                    TextSpan(
-                      text: ' X ',
-                      style: TextStyle(
-                          color: Colors.red,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Quick'),
-                    )
-                  ])),
+              Player(
+                isTheme: isTheme,
+                player: ' X ',
+                color: Colors.red,
+              ),
               const SizedBox(
                 height: 10,
               ),
               RichText(
                   text: TextSpan(
                       text: 'Score: ',
-                      style: const TextStyle(
-                          color: Colors.white,
+                      style: TextStyle(
+                          color: isTheme! ? Colors.white : Colors.black,
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
-                          fontFamily: 'Quick'),
+                          fontFamily: 'SFPro'),
                       children: [
                     TextSpan(
                       text: scoreX.toString(),
@@ -217,7 +246,7 @@ class _MainPageState extends State<MainPage> {
                           color: Colors.red,
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
-                          fontFamily: 'Quick'),
+                          fontFamily: 'SFPro'),
                     )
                   ])),
             ],
@@ -231,35 +260,22 @@ class _MainPageState extends State<MainPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              RichText(
-                  text: const TextSpan(
-                      text: 'Player',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Quick'),
-                      children: [
-                    TextSpan(
-                      text: ' O ',
-                      style: TextStyle(
-                          color: Colors.green,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Quick'),
-                    )
-                  ])),
+              Player(
+                isTheme: isTheme,
+                player: ' O ',
+                color: Colors.green,
+              ),
               const SizedBox(
                 height: 10,
               ),
               RichText(
                   text: TextSpan(
                       text: 'Score: ',
-                      style: const TextStyle(
-                          color: Colors.white,
+                      style: TextStyle(
+                          color: isTheme! ? Colors.white : Colors.black,
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
-                          fontFamily: 'Quick'),
+                          fontFamily: 'SFPro'),
                       children: [
                     TextSpan(
                       text: scoreO.toString(),
@@ -267,7 +283,7 @@ class _MainPageState extends State<MainPage> {
                           color: Colors.green,
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
-                          fontFamily: 'Quick'),
+                          fontFamily: 'SFPro'),
                     )
                   ])),
             ],
@@ -294,14 +310,14 @@ class _MainPageState extends State<MainPage> {
                   text: turnOf == true ? 'X' : 'O',
                   style: TextStyle(
                       color: turnOf! ? Colors.red : Colors.green,
-                      fontFamily: 'Quick',
+                      fontFamily: 'SFPro',
                       fontWeight: FontWeight.w500))
             ],
                 text: 'Turn of ',
-                style: const TextStyle(
-                    color: Colors.white,
+                style: TextStyle(
+                    color: isTheme! ? Colors.white : Colors.black,
                     fontWeight: FontWeight.w500,
-                    fontFamily: 'Quick',
+                    fontFamily: 'SFPro',
                     fontSize: 20))));
   }
 
@@ -329,8 +345,8 @@ class _MainPageState extends State<MainPage> {
                     child: Text(
                       xOrOList[index],
                       style: TextStyle(
-                          fontFamily: 'Quick',
-                          fontSize: 40,
+                          fontFamily: 'SWild',
+                          fontSize: 60,
                           fontWeight: FontWeight.w500,
                           color: xOrOList[index] == 'X'
                               ? Colors.red
@@ -359,19 +375,6 @@ class _MainPageState extends State<MainPage> {
       winnerCheck();
     });
   }
-
-  ///asinxron
-/* 
-  void _clearBoard() async {
-    Future.delayed(const Duration(milliseconds: 500), () {
-      setState(() {
-        for (int i = 0; i < 9; i++) {
-          xOrOList[i] = '';
-          filledBoxes = 0;
-        }
-      });
-    });
-  } */
 
   void _clearBoard() {
     setState(() {
@@ -446,85 +449,6 @@ class _MainPageState extends State<MainPage> {
     }
   }
 
-  ///asinxron
-/*   void _showAlertDialog(String title, String winner) async {
-    Future.delayed(const Duration(milliseconds: 500), () {
-      showCupertinoDialog(
-          context: context,
-          builder: (context) {
-            return CupertinoAlertDialog(
-              title: Text(
-                title,
-                style: const TextStyle(
-                    fontFamily: 'Quick',
-                    fontWeight: FontWeight.w500,
-                    fontSize: 20,
-                    color: Colors.black),
-              ),
-              content: Container(
-                  alignment: Alignment.center,
-                  child: RichText(
-                      text: winner == ''
-                          ? const TextSpan(
-                              text: 'The match ended in draw',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: 'Quick',
-                                  color: Colors.black))
-                          : TextSpan(
-                              text: 'The winner is ',
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: 'Quick',
-                                  color: Colors.black),
-                              children: [
-                                  TextSpan(
-                                    text: winner,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontFamily: 'Quick',
-                                        color: winner == 'X'
-                                            ? Colors.red
-                                            : Colors.green),
-                                  )
-                                ])) /* Text(
-                winner == ''
-                    ? 'The match ended in a draw'
-                    : 'The winner is $winner',
-                style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontFamily: 'Quick',
-                    color: winner == 'X' ? Colors.red : Colors.green),
-              ), */
-                  ),
-              actions: [
-                CupertinoDialogAction(
-                    child: const Text(
-                      'OK',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Quick'),
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      setState(() {
-                        turnOf = true;
-                      });
-                    }),
-              ],
-            );
-          });
-    });
-
-    if (winner == 'O') {
-      scoreO = scoreO! + 1;
-    } else if (winner == 'X') {
-      scoreX = scoreX! + 1;
-    }
-  }
-} */
   void _showAlertDialog(String title, String winner) {
     showCupertinoDialog(
         context: context,
@@ -533,7 +457,7 @@ class _MainPageState extends State<MainPage> {
             title: Text(
               title,
               style: const TextStyle(
-                  fontFamily: 'Quick',
+                  fontFamily: 'SFPro',
                   fontWeight: FontWeight.w500,
                   fontSize: 20,
                   color: Colors.black),
@@ -546,34 +470,25 @@ class _MainPageState extends State<MainPage> {
                             text: 'The match ended in draw',
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,
-                                fontFamily: 'Quick',
+                                fontFamily: 'SFPro',
                                 color: Colors.black))
                         : TextSpan(
                             text: 'The winner is ',
                             style: const TextStyle(
                                 fontWeight: FontWeight.w500,
-                                fontFamily: 'Quick',
+                                fontFamily: 'SFPro',
                                 color: Colors.black),
                             children: [
                                 TextSpan(
                                   text: winner,
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,
-                                      fontFamily: 'Quick',
+                                      fontFamily: 'SFPro',
                                       color: winner == 'X'
                                           ? Colors.red
                                           : Colors.green),
                                 )
-                              ])) /* Text(
-                winner == ''
-                    ? 'The match ended in a draw'
-                    : 'The winner is $winner',
-                style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontFamily: 'Quick',
-                    color: winner == 'X' ? Colors.red : Colors.green),
-              ), */
-                ),
+                              ]))),
             actions: [
               CupertinoDialogAction(
                   child: const Text(
@@ -582,7 +497,7 @@ class _MainPageState extends State<MainPage> {
                         color: Colors.black,
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
-                        fontFamily: 'Quick'),
+                        fontFamily: 'SFPro'),
                   ),
                   onPressed: () {
                     _clearBoard();
