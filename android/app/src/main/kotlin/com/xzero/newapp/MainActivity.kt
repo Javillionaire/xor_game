@@ -1,4 +1,4 @@
-package com.example.iks_zero_game
+package com.xzero.newapp
 
 import io.flutter.embedding.android.FlutterActivity
 
