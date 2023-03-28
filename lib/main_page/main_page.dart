@@ -197,6 +197,7 @@ class _MainPageState extends State<MainPage> {
           ]),
       body: Column(
         children: [
+
           playerScore(),
           const SizedBox(
             height: 30,
