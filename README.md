@@ -1,4 +1,4 @@
-# iks_zero_game
+# xor_game
 
 A new Flutter project.
 
